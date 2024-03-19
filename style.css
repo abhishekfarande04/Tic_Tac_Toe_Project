@@ -9,11 +9,11 @@
 .wrapper {
     width: 100vw;
     height: 100vh;
-    /* background-color: yellow; */
-    background-size: cover;
-    background-position: center;
+    background-color: black;
+    background-size: cover; 
+    background-position: center; 
     display: grid;
-    place-content: center;
+    place-items: center;
 }
 
 .game-info {
@@ -22,8 +22,34 @@
     top: 3rem;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color : rgba(255, 255, 255, 0.15);
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: ;
+    padding: 0.5rem;
+    text-align: center;
+
+}
+
+.tic-tac-toe {
+    width: 90%;
+    max-width: 20rem;
+    background-color : rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding:2rem;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    aspect-ratio: 1/1;
+}
+
+.box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    font-size: 3rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
