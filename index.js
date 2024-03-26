@@ -43,9 +43,9 @@ initGame();
 
 function swapturn() {
     if(currentPlayer === "X") {
-        currentPlayer === "O";
+        currentPlayer = "O";
     } else {
-        currentPlayer === "X";
+        currentPlayer = "X";
     }
     // UI updated
     gameInfo.innerText=`Current Player - ${currentPlayer}`;
@@ -65,14 +65,45 @@ function handleClick(index) {
 
 function checkGameOver() {
     let answer="";
+    // when same mark is at subarray of Winningpositions then marker player is Winner
+    winningPositions.forEach((position) => {
+        if ((gameGrid[position[0]] !== "" || gameGrid[position[1]] !== "" || gameGrid[position[2]] !== "") 
+         && (gameGrid[position[0]] === gameGrid[position[1]]) && (gameGrid[position[1]] === gameGrid[position[2]])) {
+          // check if winner is X 
+          if (gameGrid[position[0]] === "X") {
+            answer = "X";
+          } else {
+            answer = "O";
+          }
+
+          boxes.forEach((box) => {
+            box.style.pointerEvents="none";
+          })
+
+
+          // now we know X/O is winner 
+          boxes[position[0]].classList.add(".win");
+          boxes[position[1]].classList.add(".win");
+          boxes[position[2]].classList.add(".win");
+
+        }
+
+         
+    });
     
+    // as answer is non-empty then we can be sure about we have a winner so we have to restart the game
+    if(answer !== "") {
+        gameInfo.innerText=`Winner Player - ${answer}`;
+        newGameBtn.classList.add(".active");
+        return;
+
+    }
+
+
+
+
+
     
-
-
-
-
-
-    newGameBtn.classList.add(".active");
 }
 
 // here we takes Boxes (list of all Boxes ) and insert an Event listener to get to know about which index box is clicked 
@@ -83,4 +114,4 @@ boxes.forEach((box,index) => {
     })
 })
 
-newGameBtn.addEventListener("click",initGame());
+newGameBtn.addEventListener("click",initGame);
