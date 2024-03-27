@@ -23,12 +23,13 @@ const winningPositions= [
 function initGame() {
     currentPlayer="X";
     gameGrid=["","","","","","","","","",]; //initially all boxes are blank
-    newGameBtn.classList.remove(".active");
+    newGameBtn.classList.remove("active");
     gameInfo.innerText=`Current Player - ${currentPlayer}`;
     // but we need to update the Grid in the UI also
     boxes.forEach((box,index) => {
         box.innerText ="";
         boxes[index].style.pointerEvents="all";
+        box.classList.remove("win");
     })
 }
 
@@ -52,16 +53,7 @@ function swapturn() {
 }
 
 
-function handleClick(index) {
-    if (gameGrid[index] === "") {
-        boxes[index].innerText=currentPlayer; // updated in UI 
-        gameGrid[index]=currentPlayer; // upadted in Game Grid 
 
-        swapturn();
-
-        checkGameOver();
-    }
-}
 
 function checkGameOver() {
     let answer="";
@@ -75,16 +67,17 @@ function checkGameOver() {
           } else {
             answer = "O";
           }
-
+        
+          //disable pointer events
           boxes.forEach((box) => {
             box.style.pointerEvents="none";
           })
 
 
           // now we know X/O is winner 
-          boxes[position[0]].classList.add(".win");
-          boxes[position[1]].classList.add(".win");
-          boxes[position[2]].classList.add(".win");
+          boxes[position[0]].classList.add("win");
+          boxes[position[1]].classList.add("win");
+          boxes[position[2]].classList.add("win");
 
         }
 
@@ -94,17 +87,38 @@ function checkGameOver() {
     // as answer is non-empty then we can be sure about we have a winner so we have to restart the game
     if(answer !== "") {
         gameInfo.innerText=`Winner Player - ${answer}`;
-        newGameBtn.classList.add(".active");
+        newGameBtn.classList.add("active");
         return;
-
     }
 
+    //we know NO winner is found lets see if there is TIE
+    let fillCount=0;
+    gameGrid.forEach((box) => {
+        if (box !== "") {
+            fillCount++;
+        }
+    });
 
-
+    // as Fillcount is 9 means Game is Over Board is Filled
+    if(fillCount === 9) {
+        gameInfo.innerText="GAME TIED";
+        newGameBtn.classList.add("active");
+    }
 
 
     
 }
+
+function handleClick(index) {
+    if (gameGrid[index] === "") {
+        boxes[index].innerText=currentPlayer; // updated in UI 
+        gameGrid[index]=currentPlayer; // upadted in Game Grid 
+        boxes[index].style.pointerEvents = "none";
+        swapturn();
+
+        checkGameOver();
+    }
+};
 
 // here we takes Boxes (list of all Boxes ) and insert an Event listener to get to know about which index box is clicked 
 boxes.forEach((box,index) => {

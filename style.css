@@ -9,6 +9,7 @@
 .wrapper {
     width: 100vw;
     height: 100vh;
+    background-image: url(./gradient-bg.jpg);
     background-color: black;
     background-size: cover; 
     background-position: center; 
@@ -81,7 +82,7 @@
     display: none;
 }
 
-.btn .active {
+.btn.active {
     display: flex;
 }
 
